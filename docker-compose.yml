@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: ecoaudit-backend
+    environment:
+      DATABASE_URL: sqlite:////data/ecoaudit.db
+      CORS_ORIGINS: http://localhost:3000,http://localhost:5173
+    ports:
+      - "8000:8000"
+    volumes:
+      - ecoaudit-data:/data
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ecoaudit-frontend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  ecoaudit-data:
