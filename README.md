@@ -1,10 +1,18 @@
 # EcoAudit -- Community Waste Logger
 
-EcoAudit records community waste disposal activity with user details, waste categories, quantities, and browser geolocation. The frontend is a React/Vite app and the backend is a FastAPI API backed by SQLite.
+EcoAudit records community waste disposal activity with user details, waste categories, quantities, and browser geolocation. The frontend is a React app built with Vite, and the backend is a FastAPI API backed by SQLite.
 
 ## Live Deployment
 
-- App: `https://ecoaudit.sakthidurga.in/`
+- Live Website: `https://eco-audit-git-main-sakthidurga2008-9558s-projects.vercel.app/`
+- Backend API: `https://eco-audit-hqm7.onrender.com/`
+- API Docs: `https://eco-audit-hqm7.onrender.com/docs`
+
+## Tech Stack
+
+- Frontend: `React`, `Vite`, `JavaScript`, `Tailwind CSS`, `Axios`, `React Router`, `React Hook Form`, `Recharts`
+- Backend: `FastAPI`, `Python`, `SQLAlchemy`, `Pydantic`, `SQLite`, `Uvicorn`
+- Deployment: `Vercel` for the frontend and `Render` for the backend
 
 ## Project Structure
 
@@ -99,7 +107,7 @@ docker run --rm -p 3000:3000 eco-ui:1.0
 To build with a production backend URL from `frontend/.env.production`, edit this file before the build:
 
 ```bash
-VITE_API_BASE_URL=https://your-backend-domain.com
+VITE_API_BASE_URL=https://eco-audit-hqm7.onrender.com/
 ```
 
 To override it directly during Docker build:
@@ -107,7 +115,7 @@ To override it directly during Docker build:
 ```bash
 cd frontend
 docker build \
-	--build-arg VITE_API_BASE_URL=https://your-backend-domain.com \
+	--build-arg VITE_API_BASE_URL=https://eco-audit-hqm7.onrender.com/ \
 	-t eco-ui:1.0 .
 ```
 
@@ -164,14 +172,14 @@ For production builds, use `frontend/.env.production`. Vite reads it automatical
 The frontend API URL is a build-time setting, not a runtime container setting. In `docker-compose.yml`, the frontend now uses a Docker build arg:
 
 ```bash
-VITE_API_BASE_URL=https://your-backend-domain.com docker compose build frontend
+VITE_API_BASE_URL=https://eco-audit-hqm7.onrender.com/ docker compose build frontend
 docker compose up -d
 ```
 
 Or place it in a root-level `.env` file used by Docker Compose:
 
 ```bash
-VITE_API_BASE_URL=https://your-backend-domain.com
+VITE_API_BASE_URL=https://eco-audit-hqm7.onrender.com/
 ```
 
 Then run:
