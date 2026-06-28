@@ -92,6 +92,21 @@ docker build -t eco-ui:1.0 .
 docker run --rm -p 3000:3000 eco-ui:1.0
 ```
 
+To build with a production backend URL from `frontend/.env.production`, edit this file before the build:
+
+```bash
+VITE_API_BASE_URL=https://your-backend-domain.com
+```
+
+To override it directly during Docker build:
+
+```bash
+cd frontend
+docker build \
+	--build-arg VITE_API_BASE_URL=https://your-backend-domain.com \
+	-t eco-ui:1.0 .
+```
+
 To add both a specific version and `latest` tag in one build:
 
 ```bash
@@ -137,6 +152,32 @@ To point the frontend to a different API URL, create `frontend/.env`:
 ```bash
 VITE_API_BASE_URL=http://localhost:8000
 ```
+
+For production builds, use `frontend/.env.production`. Vite reads it automatically when `npm run build` runs.
+
+## Docker Compose Build Config
+
+The frontend API URL is a build-time setting, not a runtime container setting. In `docker-compose.yml`, the frontend now uses a Docker build arg:
+
+```bash
+VITE_API_BASE_URL=https://your-backend-domain.com docker compose build frontend
+docker compose up -d
+```
+
+Or place it in a root-level `.env` file used by Docker Compose:
+
+```bash
+VITE_API_BASE_URL=https://your-backend-domain.com
+```
+
+Then run:
+
+```bash
+docker compose build frontend
+docker compose up -d
+```
+
+If you change the backend URL later, rebuild the frontend image so the new Vite value is embedded into the static files.
 
 ## Geolocation Flow
 
