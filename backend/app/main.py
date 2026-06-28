@@ -10,12 +10,10 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="EcoAudit API", version="1.0.0")
 
-cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:5173")
-origins = [origin.strip() for origin in cors_origins.split(",") if origin.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["https://eco-audit.vercel.app"],  # your Vercel URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
