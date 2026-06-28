@@ -1,6 +1,6 @@
 # EcoAudit -- Community Waste Logger
 
-EcoAudit records community waste disposal activity with user details, waste categories, quantities, and browser geolocation. The frontend is a React app built with Vite, and the backend is a FastAPI API backed by SQLite.
+EcoAudit records community waste disposal activity with user details, waste categories, quantities, and browser geolocation. The frontend is a React app built with Vite, and the backend is a FastAPI API backed by SQLite locally and PostgreSQL on Render.
 
 ## Live Deployment
 
@@ -11,8 +11,26 @@ EcoAudit records community waste disposal activity with user details, waste cate
 ## Tech Stack
 
 - Frontend: `React`, `Vite`, `JavaScript`, `Tailwind CSS`, `Axios`, `React Router`, `React Hook Form`, `Recharts`
-- Backend: `FastAPI`, `Python`, `SQLAlchemy`, `Pydantic`, `SQLite`, `Uvicorn`
+- Backend: `FastAPI`, `Python`, `SQLAlchemy`, `Pydantic`, `SQLite`, `PostgreSQL`, `Uvicorn`, `psycopg`
 - Deployment: `Vercel` for the frontend and `Render` for the backend
+
+## Production Database
+
+- Local Development: Uses `SQLite` by default with `sqlite:///./ecoaudit.db`
+- Production Database: Uses a `Render PostgreSQL` database through the `DATABASE_URL` environment variable
+- Render Database: `dpg-d90l0vbtqb8s73fuie0g-a`
+
+Set this environment variable on your Render backend service:
+
+```bash
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+```
+
+Notes:
+
+- Render provides the full external database URL in the database dashboard; copy that full value into `DATABASE_URL`
+- The backend automatically converts Render-compatible PostgreSQL URLs for SQLAlchemy
+- If `DATABASE_URL` is not set, the app falls back to local SQLite storage
 
 ## Project Structure
 
@@ -139,7 +157,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-The backend creates `ecoaudit.db` automatically when it starts.
+The backend creates `ecoaudit.db` automatically when it starts if `DATABASE_URL` is not set.
 
 Useful endpoints:
 
@@ -193,7 +211,7 @@ If you change the backend URL later, rebuild the frontend image so the new Vite 
 
 ## Geolocation Flow
 
-The frontend captures geolocation using the browser `navigator.geolocation` API. The user must allow location permission before submitting the form. The frontend sends `latitude` and `longitude` to the backend in the `POST /logs` payload, and the backend stores those values in SQLite.
+The frontend captures geolocation using the browser `navigator.geolocation` API. The user must allow location permission before submitting the form. The frontend sends `latitude` and `longitude` to the backend in the `POST /logs` payload, and the backend stores those values in SQLite locally or PostgreSQL in production.
 
 ## Build Frontend
 
