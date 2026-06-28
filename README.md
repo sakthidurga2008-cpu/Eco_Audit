@@ -18,7 +18,43 @@ Eco_Audit/
 From the project root:
 
 ```bash
-docker compose up --build
+docker compose up
+```
+
+To start in detached mode:
+
+```bash
+docker compose up -d
+```
+
+To view running containers:
+
+```bash
+docker compose ps
+```
+
+To view logs:
+
+```bash
+docker compose logs -f
+```
+
+To stop the compose services:
+
+```bash
+docker compose stop
+```
+
+To stop and remove the compose services:
+
+```bash
+docker compose down
+```
+
+To stop and remove the compose services, network, and database volume:
+
+```bash
+docker compose down -v
 ```
 
 Open:
@@ -28,6 +64,43 @@ Open:
 - API docs: `http://localhost:8000/docs`
 
 SQLite data is stored in the Docker volume `ecoaudit-data`.
+
+## Build Backend Docker Image
+
+```bash
+cd backend
+docker build -t eco-backend:1.0 .
+docker run --rm -p 8000:8000 -v "$(pwd)/data:/app/data" eco-backend:1.0
+```
+
+To add both a specific version and `latest` tag in one build:
+
+```bash
+docker build -t eco-backend:1.0 -t eco-backend:latest .
+```
+
+Open:
+
+- Backend API: `http://localhost:8000`
+- API docs: `http://localhost:8000/docs`
+
+## Build Frontend Docker Image
+
+```bash
+cd frontend
+docker build -t eco-ui:1.0 .
+docker run --rm -p 3000:3000 eco-ui:1.0
+```
+
+To add both a specific version and `latest` tag in one build:
+
+```bash
+docker build -t eco-ui:1.0 -t eco-ui:latest .
+```
+
+Open:
+
+- Frontend: `http://localhost:3000`
 
 ## Run Backend Locally
 
