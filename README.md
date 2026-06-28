@@ -2,6 +2,10 @@
 
 EcoAudit records community waste disposal activity with user details, waste categories, quantities, and browser geolocation. The frontend is a React/Vite app and the backend is a FastAPI API backed by SQLite.
 
+## Live Deployment
+
+- App: `https://ecoaudit.sakthidurga.in/`
+
 ## Project Structure
 
 ```text
